@@ -1,0 +1,13 @@
+POST http://127.0.0.1:5000/login?code={{}}
+
+###
+GET http://127.0.0.1:5000/tests?has_items=True
+
+###
+GET http://127.0.0.1:5000/tests
+
+###
+GET http://127.0.0.1:5000/test/2
+
+###
+GET http://127.0.0.1:5000/user/olIhK5Vp9aMYlOrhNugx1i9i0Q2E/records
