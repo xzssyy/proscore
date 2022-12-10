@@ -14,11 +14,7 @@ app.config['secret'] = '67102d804cd4b90011af5d1537b4668d'
 db = SQLAlchemy(app)
 Migrate(app, db)
 
-
-
 import api
-
-
 
 if __name__ == '__main__':
     app.run()

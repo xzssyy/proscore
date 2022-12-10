@@ -1,0 +1,87 @@
+{
+    "RecognitionStatus": "Success",
+    "Offset": 21200000,
+    "Duration": 2500000,
+    "NBest": [
+        {
+            "Confidence": 0.67551035,
+            "Lexical": "trousers",
+            "ITN": "trousers",
+            "MaskedITN": "trousers",
+            "Display": "Trousers.",
+            "AccuracyScore": 3.0,
+            "FluencyScore": 0.0,
+            "CompletenessScore": 0.0,
+            "PronScore": 0.6,
+            "Words": [
+                {
+                    "Word": "trousers",
+                    "Offset": 21200000,
+                    "Duration": 2500000,
+                    "Confidence": 0.0,
+                    "AccuracyScore": 3.0,
+                    "ErrorType": "Mispronunciation",
+                    "Syllables": [
+                        {
+                            "Syllable": "traw",
+                            "Offset": 21200000,
+                            "Duration": 1300000,
+                            "AccuracyScore": 6.0
+                        },
+                        {
+                            "Syllable": "zaxrz",
+                            "Offset": 22600000,
+                            "Duration": 1100000,
+                            "AccuracyScore": 0.0
+                        }
+                    ],
+                    "Phonemes": [
+                        {
+                            "Phoneme": "t",
+                            "Offset": 21200000,
+                            "Duration": 600000,
+                            "AccuracyScore": 11.0
+                        },
+                        {
+                            "Phoneme": "r",
+                            "Offset": 21900000,
+                            "Duration": 300000,
+                            "AccuracyScore": 0.0
+                        },
+                        {
+                            "Phoneme": "aw",
+                            "Offset": 22300000,
+                            "Duration": 200000,
+                            "AccuracyScore": 0.0
+                        },
+                        {
+                            "Phoneme": "z",
+                            "Offset": 22600000,
+                            "Duration": 200000,
+                            "AccuracyScore": 0.0
+                        },
+                        {
+                            "Phoneme": "ax",
+                            "Offset": 22900000,
+                            "Duration": 200000,
+                            "AccuracyScore": 0.0
+                        },
+                        {
+                            "Phoneme": "r",
+                            "Offset": 23200000,
+                            "Duration": 200000,
+                            "AccuracyScore": 0.0
+                        },
+                        {
+                            "Phoneme": "z",
+                            "Offset": 23500000,
+                            "Duration": 200000,
+                            "AccuracyScore": 0.0
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "DisplayText": "Trousers."
+}
