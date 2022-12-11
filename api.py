@@ -1,3 +1,5 @@
+import wave
+
 import requests
 from flask import request, jsonify
 from sqlalchemy import and_, desc
@@ -138,16 +140,25 @@ def add_item_record(open_id):
     test_id = request.args.get('test_id')
     item_id = request.args.get('item_id')
 
-    file = request.files.get('voice.wav')
+    file = request.files.get('voice')
+    # print(file.name)
+    file.save('voice.webm')
+
+
 
     if file is None:
         return jsonify({'error': 'file not found'})
+
+    from moviepy.video.io import ffmpeg_tools
+
+    ffmpeg_tools.ffmpeg_extract_audio('voice.webm', 'voice.wav')
 
     test = db.session.execute(db.select(Test).filter(Test.id == test_id)).scalar()
     item = test.get_items(item_id)
     user = db.session.execute(db.select(User).filter(User.open_id == open_id)).scalar()
 
-    # file = open('录音.wav', 'rb')
+    file = open('voice.wav', 'rb')
+    # print(file.getparams()
     res = get_pronScore(file, item.text)["NBest"][0]
 
     record = Record.generate_item_record(res, user.id, test_id, item_id)
