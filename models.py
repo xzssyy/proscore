@@ -178,7 +178,7 @@ class Test(db.Model):
                'test_type': self.test_type,
                'thumb_url': 'static/' + str(self.image[0].image_name),
                'items': [item.to_json() for item in self.sentences]
-               if self.words is None else [item.to_json() for item in self.words]}
+               if self.words.count() == 0 else [item.to_json() for item in self.words]}
 
         return res
 
