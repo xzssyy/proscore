@@ -54,7 +54,8 @@ class Record(db.Model):
                'fluency': self.fluency,
                'completeness': self.completeness,
                'time': self.time.strftime("%m/%d/%Y, %H:%M:%S"),
-               'rank': self.rank}
+               'rank': self.rank,
+               'test_title': self.test.title}
 
         return res
 
