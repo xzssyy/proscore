@@ -16,6 +16,7 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     open_id = db.Column(db.String(256))
+    name = db.Column(db.String(64))
 
     # one-to-many
     records = db.relationship('Record', backref='user', lazy='dynamic')

@@ -1,3 +1,4 @@
+import os
 import wave
 
 import requests
@@ -7,6 +8,8 @@ from sqlalchemy import and_, desc
 from app import app, db
 from microsoft_api import get_pronScore
 from models import User, Test, Record
+from threading import Thread
+import uuid
 
 """
     GET METHODS
@@ -96,12 +99,12 @@ def get_rank_list(test_id):
 
     return jsonify({
         'up': {
-            'user': user_up.open_id if user_up else None,
+            'user': user_up.name if user_up else None,
             'score': record_up.score if record_up else None
         }
         ,
         'down': {
-            'user': user_down.open_id if user_down else None,
+            'user': user_down.name if user_down else None,
             'score': record_down.score if record_down else None
         }
     })
@@ -115,6 +118,7 @@ def get_rank_list(test_id):
 @app.route('/login', methods=['POST'])
 def login():
     code = request.args.get('code')
+
     url = 'https://api.weixin.qq.com/sns/jscode2session'
     response = requests.request('GET', url, params={'appid': app.config['appid'],
                                                     'secret': app.config['secret'],
@@ -124,15 +128,27 @@ def login():
     res = response.json()
     try:
         user = db.session.execute(db.select(User).filter(User.open_id == res['openid']))
+
     except:
         return jsonify({'info': 'error'})
 
     if user is None:
         user = User(open_id=res['openid'])
+
         db.session.add(user)
         db.session.commit()
 
     return jsonify(res)
+
+
+@app.route('/user/<string:open_id>', methods=['POST'])
+def set_name(open_id):
+    name = request.args.get('name')
+    user = db.session.execute(db.select(User).filter(User.open_id == open_id))
+    user.name = name
+    db.session.commit()
+
+    return 'ok'
 
 
 @app.route('/user/<string:open_id>/records/add', methods=['POST'])
@@ -141,26 +157,37 @@ def add_item_record(open_id):
     item_id = request.args.get('item_id')
 
     file = request.files.get('voice')
-    # print(file.name)
-    file.save('voice.webm')
 
-
+    filename = str(uuid.uuid1())
+    file.save(filename + '.webm')
 
     if file is None:
         return jsonify({'error': 'file not found'})
 
     from moviepy.video.io import ffmpeg_tools
 
-    ffmpeg_tools.ffmpeg_extract_audio('voice.webm', 'voice.wav')
+    ffmpeg_tools.ffmpeg_extract_audio(filename + '.webm', filename + '.wav')
 
     test = db.session.execute(db.select(Test).filter(Test.id == test_id)).scalar()
     item = test.get_items(item_id)
     user = db.session.execute(db.select(User).filter(User.open_id == open_id)).scalar()
 
-    file = open('voice.wav', 'rb')
+    file = open(filename + '.wav', 'rb')
     # print(file.getparams()
-    res = get_pronScore(file, item.text)["NBest"][0]
+    # res = get_pronScore(file, item.text)["NBest"][0]
+    #
+    # record = Record.generate_item_record(res, user.id, test_id, item_id)
 
-    record = Record.generate_item_record(res, user.id, test_id, item_id)
+    thr = Thread(target=create_record, args=[file, item, user, test_id, item_id, filename])
+    thr.start()
 
-    return jsonify(record.to_json())
+    return jsonify({'msg': '上传成功'})
+
+
+def create_record(file, item, user, test_id, item_id, filename):
+    with app.app_context():
+        res = get_pronScore(file, item.text)["NBest"][0]
+        print('ok')
+        record = Record.generate_item_record(res, user.id, test_id, item_id)
+        os.remove(filename + '.webm')
+        os.remove(filename + '.wav')

@@ -7,13 +7,13 @@ GET http://127.0.0.1:5000/tests?has_items=True
 GET http://127.0.0.1:5000/test/4
 
 ###
-GET http://127.0.0.1:5000/user/olIhK5Vp9aMYlOrhNugx1i9i0Q2E/records
+GET http://127.0.0.1:5000/user/olIhK5atRKX-T46KFQbgcrxcbusI/records
 
 ###
-GET http://127.0.0.1:5000/user/olIhK5Vp9aMYlOrhNugx1i9i0Q2E/test/1/record
+GET http://127.0.0.1:5000/user/olIhK5atRKX-T46KFQbgcrxcbusI/test/1/record
 
 ###
 GET http://127.0.0.1:5000/test/1/rank_list?score=10
 
 ###
-POST http://127.0.0.1:5000/user/olIhK5Vp9aMYlOrhNugx1i9i0Q2E/records/add?test_id=2&item_id=6
+POST http://127.0.0.1:5000/user/olIhK5Vp9aMYlOrhNugx1i9i0Q2E/records/add?test_id=1&item_id=1

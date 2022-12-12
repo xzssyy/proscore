@@ -42,9 +42,13 @@ def get_pronScore(audioFile, referenceText):
     # audioFile = open('audio.wav', 'rb')
     # audioFile = open('../bad.wav', 'rb')
     # send request with chunked data
+    t = time.time()
     response = requests.post(url=url, data=get_chunk(audioFile), headers=headers)
+    t1 = time.time()
+    print(t1-t)
     # getResponseTime = time.time()
     audioFile.close()
+    print(url)
 
     # latency = getResponseTime - uploadFinishTime
     # print("Latency = %sms" % int(latency * 1000))

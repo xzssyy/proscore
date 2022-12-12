@@ -8,3 +8,6 @@
 | POST | http://127.0.0.1:5000/user/{{open_id}}/records/add             | test_id<br/>item_id                 | 录音结束后传输              |
 | GET  | http://127.0.0.1:5000/user/{{open_id}}/test/{{test_id}}/record |                                     | 获得特定题目的答题记录,在答题结束后请求 |
 
+u
+
+ 
